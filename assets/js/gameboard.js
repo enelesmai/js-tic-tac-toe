@@ -1,6 +1,16 @@
 const Gameboard = (() => {
-    let board_array = ["", "", "", "", "", "", "", ""];
-    const updateBoard = (position, symbol) => { board_array[position] = symbol }
-    const isPositionEmpty = (position) => { board_array[position] === "" }
-    const cleanBoard = () => { board_array = ["", "", "", "", "", "", "", ""] }
+    let boardAarray = ['', '', '', '', '', '', '', ''];
+    const updateBoard = (position, symbol) => {
+        boardAarray[position] = symbol;
+        return true;
+    };
+    const isPositionEmpty = (position) => boardAarray[position] === '';
+    const cleanBoard = () => {
+        boardAarray = ['', '', '', '', '', '', '', ''];
+        return true;
+    };
+    const getBoardArray = () => boardAarray;
+    return {
+        updateBoard, isPositionEmpty, cleanBoard, getBoardArray,
+    };
 })();
