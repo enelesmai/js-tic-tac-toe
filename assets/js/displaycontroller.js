@@ -12,19 +12,17 @@ const DisplayController = (() => {
 
     const renderScore = (p1, p2) => {
         var htmlTag = '<div class="score-board">';
-        htmlTag += 'Player 1: ' + p1.getName() + ' ';
-        htmlTag += '<div class="score-black">' + p1.getScore() + '</div>';
+        htmlTag += '<b>Player 1: ' + p1.getName() + ' </b>';
+        htmlTag += '<div class="score-number">' + p1.getScore() + '</div>';
         htmlTag += '</div><div class="result"></div><div class="score-board">';
-        htmlTag += 'Player 2: ' + p2.getName() + ' ';
-        htmlTag += '<div class="score-black">' + p2.getScore() + '</div></div>';
+        htmlTag += '<b>Player 2: ' + p2.getName() + ' </b>';
+        htmlTag += '<div class="score-number">' + p2.getScore() + '</div></div>';
         const scorePlaceholder = document.getElementById('scoreDisplay');
         scorePlaceholder.innerHTML = htmlTag;
     };
 
     return {
-        renderBoard, renderScore,
+        renderBoard,
+        renderScore,
     };
 })();
-
-DisplayController.renderBoard(Gameboard.getBoardArray());
-DisplayController.renderScore(p1, p2);

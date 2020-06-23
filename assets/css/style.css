@@ -6,15 +6,20 @@
     align-items: center;
 }
 
+
 /*################# score board #################*/
 
 .score-board {
     display: inline-block;
     margin: 10px auto;
-    width: 75px;
+    width: auto;
     border: solid 1px #175727;
-    padding: 5px;
+    padding: 15px;
     text-align: center;
+    background-color: #34495e;
+    color: #fff;
+    border: 6px solid #2c3e50;
+    border-radius: 10px;
 }
 
 .score-container {
@@ -28,6 +33,11 @@
     margin: 23px;
 }
 
+.score-number {
+    font-size: 2em;
+}
+
+
 /* ############### Game board ################## */
 
 .game-board {
@@ -38,7 +48,6 @@
     color: #fff;
     border: 6px solid #2c3e50;
     border-radius: 10px;
-
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
