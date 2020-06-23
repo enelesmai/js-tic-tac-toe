@@ -62,3 +62,20 @@
     justify-content: center;
     align-items: center;
 }
+
+#formPlayers {
+    padding-top: 24px;
+    padding-bottom: 18px;
+    background-color: #34495e;
+    color: #fff;
+    border: 6px solid #2c3e50;
+    border-radius: 10px;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+}
