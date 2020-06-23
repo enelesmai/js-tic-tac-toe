@@ -4,5 +4,5 @@ const Player = (name, symbol) => {
     const getSymbol = () => symbol;
     const getScore = () => score;
     const winner = () => { score += 1 };
-    return { getName, getScore, winner };
+    return { getName, getSymbol, getScore, winner };
 };
