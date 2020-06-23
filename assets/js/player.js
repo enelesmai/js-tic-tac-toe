@@ -4,5 +4,9 @@ const Player = (name, symbol) => {
     const getSymbol = () => symbol;
     const getScore = () => score;
     const winner = () => { score += 1 };
-    return { getName };
+    return { getName, getScore };
 };
+
+
+p1 = Player("Carlos", "X");
+p2 = Player("Selene", "O");
