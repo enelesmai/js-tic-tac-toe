@@ -10,10 +10,11 @@
 </head>
 
 <body>
-    <nav id = "navbar" class="navbar navbar-dark">
-        <h1 class=" mb-0">BEST OF 3 GAMES TIC TAC TOE</h1>
-      </nav>
+    <nav id="navbar" class="navbar navbar-dark">
+        <h1 class=" mb-0">TIC TAC TOE</h1>
+    </nav>
     <div id="formPlayers" class="container show">
+        <p>Enter your names to play a match of three games.</p>
         <form>
             <div class="form-group">
                 <label for="inputPlayer1">Player 1 (X):</label>
@@ -41,19 +42,19 @@
     </div>
 
     <!-- modal display -->
-        <div id="matchEndModal" class="modal-dialog hide">
-          <div class="modal-content">
+    <div id="matchEndModal" class="modal-dialog hide">
+        <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">WE HAVE A MATCH WINNER!</h5>
+                <h5 class="modal-title">MATCH IS OVER!</h5>
             </div>
             <div class="modal-body">
-              <p id="matchResults"></p>
+                <p id="matchResults"></p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Start New Match</button>
+                <button id="startNewMatchButton" type="button" class="btn btn-dark">Start New Match</button>
             </div>
-          </div>
         </div>
+    </div>
     <script type="text/javascript" src="./assets/js/player.js"></script>
     <script type="text/javascript" src="./assets/js/gameboard.js"></script>
     <script type="text/javascript" src="./assets/js/displaycontroller.js"></script>

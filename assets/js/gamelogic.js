@@ -3,6 +3,20 @@ const GameLogic = (() => {
     let gameFinished = false;
     let gamesPlayed = 0;
     let matchWinner;
+    let matchDraw = '';
+    const gamesToPlay = 1;
+
+    const startNewMatch = () => {
+        p1 = null;
+        p2 = null;
+        currentPlayer = null;
+        gameFinished = false;
+        gamesPlayed = 0;
+        matchWinner = null;
+        matchDraw = '';
+        Gameboard.cleanBoard();
+        DisplayController.prepareMatchScreen();
+    }
 
     const winnerMove = () => {
         let winner = false;
@@ -112,16 +126,15 @@ const GameLogic = (() => {
                 }
             };
         };
-        if (gamesPlayed == 1 && p1.getScore() != p2.getScore()) {
+
+        if (gamesPlayed == gamesToPlay && p1.getScore() != p2.getScore()) {
             if (p1.getScore() > p2.getScore()) {
-                console.log("match winner :" + p1.getName())
                 matchWinner = p1;
             } else {
-                console.log("match winner :" + p2.getName())
                 matchWinner = p2;
             };
-        } else if (gamesPlayed == 1) {
-            console.log("Wow you both are gooood!");
+        } else if (gamesPlayed == gamesToPlay) {
+            matchDraw = "Wow you both are gooood!";
         };
         if (matchWinner) {
             let winnerStr = matchWinner.getName() + ' is the winner: ';
@@ -130,10 +143,11 @@ const GameLogic = (() => {
             } else {
                 winnerStr += p2.getScore() + '-' + p1.getScore();
             }
-            DisplayController.renderMatchWinner(winnerStr);
-            // showNewMatchButton();
+            DisplayController.renderMatchEnd(winnerStr);
+        } else if (matchDraw !== '') {
+            DisplayController.renderMatchEnd(matchDraw);
         }
 
     };
-    return { startMatch, switchCurrentPlayer, getCurrentPlayer, winnerMove, restartGame, getPlayers, isGameFinished, finishGame, matchLogic }
+    return { startMatch, switchCurrentPlayer, getCurrentPlayer, winnerMove, restartGame, getPlayers, isGameFinished, finishGame, matchLogic, startNewMatch }
 })();

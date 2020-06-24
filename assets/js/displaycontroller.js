@@ -82,6 +82,17 @@ const DisplayController = (() => {
         document.getElementById("formPlayers").classList.remove('show');
     };
 
+    const prepareMatchScreen = () => {
+        document.getElementById("game-container").classList.add('hide');
+        document.getElementById("game-container").classList.remove('show');
+        document.getElementById("formPlayers").classList.add('show');
+        document.getElementById("formPlayers").classList.remove('hide');
+        document.getElementById("matchEndModal").classList.add('hide');
+        document.getElementById("matchEndModal").classList.remove('show');
+        document.getElementById("inputPlayer1").value = '';
+        document.getElementById("inputPlayer2").value = '';
+    }
+
     const showStartNewGame = () => {
         document.getElementById("game-control").classList.add('show');
         document.getElementById("game-control").classList.remove('hide');
@@ -92,12 +103,15 @@ const DisplayController = (() => {
         document.getElementById("game-control").classList.remove('show');
     };
 
-    const renderMatchWinner = (string) => {
+    const renderMatchEnd = (string) => {
         hideStartNewGame();
         const winnerStr = document.getElementById('matchResults');
         winnerStr.innerHTML = string;
         document.getElementById("matchEndModal").classList.add('show');
         document.getElementById("matchEndModal").classList.remove('hide');
+        document.getElementById('startNewMatchButton').addEventListener('click', () => {
+            GameLogic.startNewMatch();
+        });
     }
 
     return {
@@ -111,6 +125,7 @@ const DisplayController = (() => {
         hideGameStatus,
         showGameStatus,
         renderGameStatus,
-        renderMatchWinner,
+        renderMatchEnd,
+        prepareMatchScreen,
     };
 })();
