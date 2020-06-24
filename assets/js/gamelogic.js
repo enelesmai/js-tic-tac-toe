@@ -1,10 +1,15 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 const GameLogic = (() => {
-    let p1, p2, currentPlayer;
+    let p1;
+    let p2;
+    let
+        currentPlayer;
     let gameFinished = false;
     let gamesPlayed = 0;
     let matchWinner;
     let matchDraw = '';
-    const gamesToPlay = 1;
+    const gamesToPlay = 3;
 
     const startNewMatch = () => {
         p1 = null;
@@ -16,11 +21,11 @@ const GameLogic = (() => {
         matchDraw = '';
         Gameboard.cleanBoard();
         DisplayController.prepareMatchScreen();
-    }
+    };
 
     const winnerMove = () => {
         let winner = false;
-        let winning = [
+        const winning = [
             ['0', '4', '8'],
             ['6', '4', '2'],
             ['0', '1', '2'],
@@ -28,48 +33,49 @@ const GameLogic = (() => {
             ['6', '7', '8'],
             ['0', '3', '6'],
             ['1', '4', '7'],
-            ['2', '5', '8']
+            ['2', '5', '8'],
         ];
-        let pMoves = currentPlayer.getMoves();
+        const pMoves = currentPlayer.getMoves();
 
         for (let i = 0; i < winning.length; i += 1) {
             if (winning[i].filter(n => !pMoves.includes(n)).length === 0) {
                 winner = true;
-            };
+            }
         }
         return winner;
     };
     const isValid = (p1, p2) => {
-        let error = [];
-        if (p1.getName() == "" || p2.getName() == "") {
-            error.push('complete both player names')
+        const error = [];
+        if (p1.getName() === '' || p2.getName() === '') {
+            error.push('complete both player names');
         }
-        if (p1.getName() == p2.getName()) {
-            error.push('use different player names')
+        if (p1.getName() === p2.getName()) {
+            error.push('use different player names');
         }
         return error;
     };
 
-    const getPlayers = () => {
-        return [p1, p2];
+    const getPlayers = () => [p1, p2];
+
+    const getRandomPlayer = () => getPlayers()[Math.floor(Math.random() * 2)];
+
+    const updateGame = () => {
+        DisplayController.renderBoard(Gameboard.getBoardArray());
+        DisplayController.renderScore(getPlayers());
     };
 
-    const getRandomPlayer = () => {
-        return getPlayers()[Math.floor(Math.random() * 2)];
-    }
-
     const startMatch = () => {
-        p1 = Player(document.getElementById("inputPlayer1").value, "X");
-        p2 = Player(document.getElementById("inputPlayer2").value, "O");
-        let errors = isValid(p1, p2);
-        if (errors.length == 0) {
+        p1 = Player(document.getElementById('inputPlayer1').value, 'X');
+        p2 = Player(document.getElementById('inputPlayer2').value, 'O');
+        const errors = isValid(p1, p2);
+        if (errors.length === 0) {
             currentPlayer = getRandomPlayer(p1, p2);
             DisplayController.prepareGameScreen();
             updateGame();
             DisplayController.renderNextMove();
         } else {
             DisplayController.showWarningMessage(errors);
-        };
+        }
     };
 
     const restartGame = () => {
@@ -82,16 +88,14 @@ const GameLogic = (() => {
         DisplayController.hideStartNewGame();
         gameFinished = false;
     };
-    const getCurrentPlayer = () => { return currentPlayer }
+    const getCurrentPlayer = () => currentPlayer;
 
-    const isGameFinished = () => {
-        return gameFinished
-    }
+    const isGameFinished = () => gameFinished;
     const finishGame = () => {
         gamesPlayed += 1;
         gameFinished = true;
         DisplayController.showStartNewGame();
-    }
+    };
     const switchCurrentPlayer = () => {
         if (currentPlayer.getName() === p1.getName()) {
             currentPlayer = p2;
@@ -100,10 +104,7 @@ const GameLogic = (() => {
         }
         return currentPlayer;
     };
-    const updateGame = () => {
-        DisplayController.renderBoard(Gameboard.getBoardArray());
-        DisplayController.renderScore(getPlayers());
-    };
+
     const matchLogic = (index) => {
         if (!isGameFinished()) {
             if (Gameboard.isPositionEmpty(index)) {
@@ -116,38 +117,46 @@ const GameLogic = (() => {
                 DisplayController.renderScore(getPlayers());
                 DisplayController.renderGameStatus(true);
                 finishGame();
+            } else if (Gameboard.isBoardFull()) {
+                DisplayController.renderGameStatus(false);
+                finishGame();
             } else {
-                if (Gameboard.isBoardFull()) {
-                    DisplayController.renderGameStatus(false);
-                    finishGame();
-                } else {
-                    switchCurrentPlayer();
-                    DisplayController.renderNextMove();
-                }
-            };
-        };
+                switchCurrentPlayer();
+                DisplayController.renderNextMove();
+            }
+        }
 
-        if (gamesPlayed == gamesToPlay && p1.getScore() != p2.getScore()) {
+        if (gamesPlayed === gamesToPlay && p1.getScore() !== p2.getScore()) {
             if (p1.getScore() > p2.getScore()) {
                 matchWinner = p1;
             } else {
                 matchWinner = p2;
-            };
-        } else if (gamesPlayed == gamesToPlay) {
-            matchDraw = "Wow you both are gooood!";
-        };
+            }
+        } else if (gamesPlayed === gamesToPlay) {
+            matchDraw = 'Wow you both are gooood!';
+        }
         if (matchWinner) {
-            let winnerStr = matchWinner.getName() + ' is the winner: ';
+            let winnerStr = `${matchWinner.getName()} is the winner: `;
             if (p1.getScore() > p2.getScore()) {
-                winnerStr += p1.getScore() + '-' + p2.getScore();
+                winnerStr += `${p1.getScore()}-${p2.getScore()}`;
             } else {
-                winnerStr += p2.getScore() + '-' + p1.getScore();
+                winnerStr += `${p2.getScore()}-${p1.getScore()}`;
             }
             DisplayController.renderMatchEnd(winnerStr);
         } else if (matchDraw !== '') {
             DisplayController.renderMatchEnd(matchDraw);
         }
-
     };
-    return { startMatch, switchCurrentPlayer, getCurrentPlayer, winnerMove, restartGame, getPlayers, isGameFinished, finishGame, matchLogic, startNewMatch }
+    return {
+        startMatch,
+        switchCurrentPlayer,
+        getCurrentPlayer,
+        winnerMove,
+        restartGame,
+        getPlayers,
+        isGameFinished,
+        finishGame,
+        matchLogic,
+        startNewMatch,
+    };
 })();
