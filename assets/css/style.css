@@ -6,7 +6,6 @@
   align-items: center;
 }
 
-
 /* ################# score board ################# */
 
 .score-board {
@@ -54,7 +53,6 @@
   width: 100%;
   padding: 10px;
 }
-
 
 /* ############### Game board ################## */
 
@@ -122,9 +120,7 @@
   color: black;
 }
 
-
 /* ############### modal ################## */
-
 .modal-dialog {
   position: fixed !important;
   top: 50%;
