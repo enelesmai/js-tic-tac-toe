@@ -10,11 +10,21 @@ const DisplayController = (() => {
         addListeners();
     };
 
+    const renderNextMove = () => {
+        let htmlTag = '<b>' + GameLogic.getCurrentPlayer().getName() + ', make your move </b>';
+        document.getElementById('currentPlayerMove').innerHTML = htmlTag;
+    }
+
     const renderScore = (p1, p2) => {
         var htmlTag = '<div class="score-board">';
         htmlTag += '<b>Player 1: ' + p1.getName() + ' </b>';
-        htmlTag += '<div class="score-number">' + p1.getScore() + '</div>';
-        htmlTag += '</div><div class="result"></div><div class="score-board">';
+        htmlTag += '<div class="score-number">' + p1.getScore() + '</div></div>';
+
+        htmlTag += '<div class="current-player"><div id ="currentPlayerMove" class="score-board">';
+        htmlTag += '</div></div>';
+
+
+        htmlTag += '<div class="score-board">';
         htmlTag += '<b>Player 2: ' + p2.getName() + ' </b>';
         htmlTag += '<div class="score-number">' + p2.getScore() + '</div></div>';
         const scorePlaceholder = document.getElementById('scoreDisplay');
@@ -26,10 +36,17 @@ const DisplayController = (() => {
         const myFunction = function myFunction() {
             const position = this.getAttribute('data-index');
             if (Gameboard.isPositionEmpty(position)) {
-                Gameboard.updateBoard(position, GameLogic.getCurrentPlayer().getSymbol())
+                Gameboard.updateBoard(position, GameLogic.getCurrentPlayer().getSymbol());
+                GameLogic.getCurrentPlayer().storeMove(position);
+                console.log(GameLogic.getCurrentPlayer().getMoves());
             }
             renderBoard(Gameboard.getBoardArray());
-            GameLogic.switchCurrentPlayer();
+            if (GameLogic.winnerMove()) {
+                console.log("winner is : " + GameLogic.getCurrentPlayer().getName());
+            } else {
+                GameLogic.switchCurrentPlayer();
+                renderNextMove();
+            };
         };
         for (let i = 0; i < elements.length; i += 1) {
             elements[i].addEventListener('click', myFunction, false);
@@ -39,5 +56,6 @@ const DisplayController = (() => {
     return {
         renderBoard,
         renderScore,
+        renderNextMove,
     };
 })();

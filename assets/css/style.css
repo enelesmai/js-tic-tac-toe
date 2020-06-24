@@ -6,7 +6,6 @@
     align-items: center;
 }
 
-
 /*################# score board #################*/
 
 .score-board {
@@ -36,7 +35,6 @@
 .score-number {
     font-size: 2em;
 }
-
 
 /* ############### Game board ################## */
 
@@ -78,4 +76,9 @@
 
 .show {
     display: block;
+}
+
+.next {
+    background-color: yellow;
+    color: black;
 }
