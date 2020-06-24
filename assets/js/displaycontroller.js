@@ -92,6 +92,14 @@ const DisplayController = (() => {
         document.getElementById("game-control").classList.remove('show');
     };
 
+    const renderMatchWinner = (string) => {
+        hideStartNewGame();
+        const winnerStr = document.getElementById('matchResults');
+        winnerStr.innerHTML = string;
+        document.getElementById("matchEndModal").classList.add('show');
+        document.getElementById("matchEndModal").classList.remove('hide');
+    }
+
     return {
         prepareGameScreen,
         showWarningMessage,
@@ -103,5 +111,6 @@ const DisplayController = (() => {
         hideGameStatus,
         showGameStatus,
         renderGameStatus,
+        renderMatchWinner,
     };
 })();

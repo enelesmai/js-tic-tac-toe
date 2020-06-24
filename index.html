@@ -11,7 +11,7 @@
 
 <body>
     <nav id = "navbar" class="navbar navbar-dark">
-        <h1 class=" mb-0">TIC TAC TOE</h1>
+        <h1 class=" mb-0">BEST OF 3 GAMES TIC TAC TOE</h1>
       </nav>
     <div id="formPlayers" class="container show">
         <form>
@@ -39,6 +39,21 @@
             <div id="boardDisplay"></div>
         </section>
     </div>
+
+    <!-- modal display -->
+        <div id="matchEndModal" class="modal-dialog hide">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">WE HAVE A MATCH WINNER!</h5>
+            </div>
+            <div class="modal-body">
+              <p id="matchResults"></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Start New Match</button>
+            </div>
+          </div>
+        </div>
     <script type="text/javascript" src="./assets/js/player.js"></script>
     <script type="text/javascript" src="./assets/js/gameboard.js"></script>
     <script type="text/javascript" src="./assets/js/displaycontroller.js"></script>

@@ -88,7 +88,7 @@ const GameLogic = (() => {
     };
     const updateGame = () => {
         DisplayController.renderBoard(Gameboard.getBoardArray());
-        DisplayController.renderScore(GameLogic.getPlayers());
+        DisplayController.renderScore(getPlayers());
     };
     const matchLogic = (index) => {
         if (!isGameFinished()) {
@@ -112,7 +112,7 @@ const GameLogic = (() => {
                 }
             };
         };
-        if (gamesPlayed == 3 && p1.getScore() != p2.getScore()) {
+        if (gamesPlayed == 1 && p1.getScore() != p2.getScore()) {
             if (p1.getScore() > p2.getScore()) {
                 console.log("match winner :" + p1.getName())
                 matchWinner = p1;
@@ -120,12 +120,18 @@ const GameLogic = (() => {
                 console.log("match winner :" + p2.getName())
                 matchWinner = p2;
             };
-        } else if (gamesPlayed == 3) {
+        } else if (gamesPlayed == 1) {
             console.log("Wow you both are gooood!");
         };
         if (matchWinner) {
-            // Show Match winner final score and finish
-            //Render new Match button
+            let winnerStr = matchWinner.getName() + ' is the winner: ';
+            if (p1.getScore() > p2.getScore()) {
+                winnerStr += p1.getScore() + '-' + p2.getScore();
+            } else {
+                winnerStr += p2.getScore() + '-' + p1.getScore();
+            }
+            DisplayController.renderMatchWinner(winnerStr);
+            // showNewMatchButton();
         }
 
     };
