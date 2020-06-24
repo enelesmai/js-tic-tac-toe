@@ -7,5 +7,6 @@ const Player = (name, symbol) => {
     const winner = () => { score += 1 };
     const storeMove = (move) => { moves.push(move) };
     const getMoves = () => moves;
-    return { getName, getSymbol, getScore, winner, storeMove, getMoves };
+    const cleanMoves = () => { moves = [] };
+    return { getName, getSymbol, getScore, winner, storeMove, getMoves, cleanMoves };
 };

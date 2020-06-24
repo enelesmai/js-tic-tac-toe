@@ -6,6 +6,7 @@
     align-items: center;
 }
 
+
 /*################# score board #################*/
 
 .score-board {
@@ -24,6 +25,8 @@
 .score-container {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .result {
@@ -35,6 +38,19 @@
 .score-number {
     font-size: 2em;
 }
+
+.current-player {
+    font-size: 2em;
+}
+
+#game-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
 
 /* ############### Game board ################## */
 
@@ -71,11 +87,11 @@
 }
 
 .hide {
-    display: none;
+    display: none !important;
 }
 
 .show {
-    display: block;
+    display: block !important;
 }
 
 .next {

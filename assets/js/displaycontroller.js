@@ -11,22 +11,49 @@ const DisplayController = (() => {
     };
 
     const renderNextMove = () => {
-        let htmlTag = '<b>' + GameLogic.getCurrentPlayer().getName() + ', make your move </b>';
+        let htmlTag = '<b>' + GameLogic.getCurrentPlayer().getName() + ', make your move! </b>';
         document.getElementById('currentPlayerMove').innerHTML = htmlTag;
     }
 
-    const renderScore = (p1, p2) => {
-        var htmlTag = '<div class="score-board">';
-        htmlTag += '<b>Player 1: ' + p1.getName() + ' </b>';
-        htmlTag += '<div class="score-number">' + p1.getScore() + '</div></div>';
+    const renderGameStatus = (winner) => {
+        let htmlTag = '';
+        if (winner) {
+            htmlTag = '<b>' + GameLogic.getCurrentPlayer().getName() + ' is the winner! </b>';
+        } else {
+            htmlTag = '<b>This is a draw!</b>';
+        }
+        document.getElementById('gameStatus').innerHTML = htmlTag;
+        showGameStatus();
+    }
 
-        htmlTag += '<div class="current-player"><div id ="currentPlayerMove" class="score-board">';
+    const hideGameStatus = () => {
+        document.getElementById("gameStatus").classList.add('hide');
+        document.getElementById("gameStatus").classList.remove('show');
+        document.getElementById("currentPlayerMove").classList.add('show');
+        document.getElementById("currentPlayerMove").classList.remove('hide');
+    }
+
+    const showGameStatus = () => {
+        document.getElementById("gameStatus").classList.remove('hide');
+        document.getElementById("gameStatus").classList.add('show');
+        document.getElementById("currentPlayerMove").classList.remove('show');
+        document.getElementById("currentPlayerMove").classList.add('hide');
+    }
+
+    const renderScore = (players) => {
+        var htmlTag = '<div class="score-board">';
+        htmlTag += '<b>Player 1: ' + players[0].getName() + ' </b>';
+        htmlTag += '<div class="score-number">' + players[0].getScore() + '</div></div>';
+
+        htmlTag += '<div class="current-player"><div id ="currentPlayerMove" class="score-board show">';
         htmlTag += '</div></div>';
 
+        htmlTag += '<div class="current-player"><div id ="gameStatus" class="score-board hide">';
+        htmlTag += '</div></div>';
 
         htmlTag += '<div class="score-board">';
-        htmlTag += '<b>Player 2: ' + p2.getName() + ' </b>';
-        htmlTag += '<div class="score-number">' + p2.getScore() + '</div></div>';
+        htmlTag += '<b>Player 2: ' + players[1].getName() + ' </b>';
+        htmlTag += '<div class="score-number">' + players[1].getScore() + '</div></div>';
         const scorePlaceholder = document.getElementById('scoreDisplay');
         scorePlaceholder.innerHTML = htmlTag;
     };
@@ -34,19 +61,28 @@ const DisplayController = (() => {
     const addListeners = () => {
         const elements = document.getElementsByClassName('box');
         const myFunction = function myFunction() {
-            const position = this.getAttribute('data-index');
-            if (Gameboard.isPositionEmpty(position)) {
-                Gameboard.updateBoard(position, GameLogic.getCurrentPlayer().getSymbol());
-                GameLogic.getCurrentPlayer().storeMove(position);
-                console.log(GameLogic.getCurrentPlayer().getMoves());
+            if (!GameLogic.isGameFinished()) {
+                const position = this.getAttribute('data-index');
+                if (Gameboard.isPositionEmpty(position)) {
+                    Gameboard.updateBoard(position, GameLogic.getCurrentPlayer().getSymbol());
+                    GameLogic.getCurrentPlayer().storeMove(position);
+                }
+                renderBoard(Gameboard.getBoardArray());
+                if (GameLogic.winnerMove()) {
+                    GameLogic.getCurrentPlayer().winner();
+                    renderScore(GameLogic.getPlayers());
+                    renderGameStatus(true);
+                    GameLogic.finishGame();
+                } else {
+                    if (Gameboard.isBoardFull()) {
+                        renderGameStatus(false);
+                        GameLogic.finishGame();
+                    } else {
+                        GameLogic.switchCurrentPlayer();
+                        renderNextMove();
+                    }
+                };
             }
-            renderBoard(Gameboard.getBoardArray());
-            if (GameLogic.winnerMove()) {
-                console.log("winner is : " + GameLogic.getCurrentPlayer().getName());
-            } else {
-                GameLogic.switchCurrentPlayer();
-                renderNextMove();
-            };
         };
         for (let i = 0; i < elements.length; i += 1) {
             elements[i].addEventListener('click', myFunction, false);
@@ -57,5 +93,7 @@ const DisplayController = (() => {
         renderBoard,
         renderScore,
         renderNextMove,
+        hideGameStatus,
+        showGameStatus,
     };
 })();

@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <div id="formPlayers" class="container">
+    <div id="formPlayers" class="container show">
         <form>
             <div class="form-group">
                 <label for="inputPlayer1">Player 1 (X):</label>
@@ -32,6 +32,9 @@
         <section class="board">
             <div id="boardDisplay"></div>
         </section>
+    </div>
+    <div id="game-control" class="hide">
+        <button type="button" id="restartButton" class="btn btn-dark">Restart the game</button>
     </div>
     <script type="text/javascript" src="./assets/js/player.js"></script>
     <script type="text/javascript" src="./assets/js/gameboard.js"></script>

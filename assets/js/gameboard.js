@@ -10,10 +10,14 @@ const Gameboard = (() => {
         return true;
     };
     const getBoardArray = () => boardAarray;
+    const isBoardFull = () => {
+        return boardAarray.filter(n => n !== '').length === 9
+    };
     return {
         updateBoard,
         isPositionEmpty,
         cleanBoard,
         getBoardArray,
+        isBoardFull,
     };
 })();
