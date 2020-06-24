@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <nav id = "navbar" class="navbar navbar-dark">
+        <h1 class=" mb-0">TIC TAC TOE</h1>
+      </nav>
     <div id="formPlayers" class="container show">
         <form>
             <div class="form-group">
@@ -29,12 +32,12 @@
             <div id="scoreDisplay" class="score-container">
             </div>
         </section>
+        <div id="game-control" class="hide">
+            <button type="button" id="restartButton" class="btn btn-dark">Start New Game</button>
+        </div>
         <section class="board">
             <div id="boardDisplay"></div>
         </section>
-    </div>
-    <div id="game-control" class="hide">
-        <button type="button" id="restartButton" class="btn btn-dark">Restart the game</button>
     </div>
     <script type="text/javascript" src="./assets/js/player.js"></script>
     <script type="text/javascript" src="./assets/js/gameboard.js"></script>

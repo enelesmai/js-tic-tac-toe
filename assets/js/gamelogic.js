@@ -1,6 +1,8 @@
 const GameLogic = (() => {
     let p1, p2, currentPlayer;
     let gameFinished = false;
+    let gamesPlayed = 0;
+    let matchWinner;
 
     const winnerMove = () => {
         let winner = false;
@@ -48,18 +50,11 @@ const GameLogic = (() => {
         let errors = isValid(p1, p2);
         if (errors.length == 0) {
             currentPlayer = getRandomPlayer(p1, p2);
-            document.getElementById("game-container").classList.add('show');
-            document.getElementById("game-container").classList.remove('hide');
-            document.getElementById("game-control").classList.add('show');
-            document.getElementById("game-control").classList.remove('hide');
-            document.getElementById("formPlayers").classList.add('hide');
-            document.getElementById("formPlayers").classList.remove('show');
+            DisplayController.prepareGameScreen();
             updateGame();
             DisplayController.renderNextMove();
         } else {
-            document.getElementById("warningMessage").classList.add('show');
-            document.getElementById("warningMessage").classList.remove('hide');
-            document.getElementById('warningMessage').innerHTML = `Please: ${errors.join(', ')}`;
+            DisplayController.showWarningMessage(errors);
         };
     };
 
@@ -70,14 +65,18 @@ const GameLogic = (() => {
         DisplayController.renderBoard(Gameboard.getBoardArray());
         DisplayController.hideGameStatus();
         DisplayController.renderNextMove();
+        DisplayController.hideStartNewGame();
         gameFinished = false;
     };
     const getCurrentPlayer = () => { return currentPlayer }
+
     const isGameFinished = () => {
         return gameFinished
     }
     const finishGame = () => {
-        gameFinished = true
+        gamesPlayed += 1;
+        gameFinished = true;
+        DisplayController.showStartNewGame();
     }
     const switchCurrentPlayer = () => {
         if (currentPlayer.getName() === p1.getName()) {
@@ -91,5 +90,44 @@ const GameLogic = (() => {
         DisplayController.renderBoard(Gameboard.getBoardArray());
         DisplayController.renderScore(GameLogic.getPlayers());
     };
-    return { startMatch, switchCurrentPlayer, getCurrentPlayer, winnerMove, restartGame, getPlayers, isGameFinished, finishGame }
+    const matchLogic = (index) => {
+        if (!isGameFinished()) {
+            if (Gameboard.isPositionEmpty(index)) {
+                Gameboard.updateBoard(index, getCurrentPlayer().getSymbol());
+                getCurrentPlayer().storeMove(index);
+            }
+            DisplayController.renderBoard(Gameboard.getBoardArray());
+            if (winnerMove()) {
+                getCurrentPlayer().winner();
+                DisplayController.renderScore(getPlayers());
+                DisplayController.renderGameStatus(true);
+                finishGame();
+            } else {
+                if (Gameboard.isBoardFull()) {
+                    DisplayController.renderGameStatus(false);
+                    finishGame();
+                } else {
+                    switchCurrentPlayer();
+                    DisplayController.renderNextMove();
+                }
+            };
+        };
+        if (gamesPlayed == 3 && p1.getScore() != p2.getScore()) {
+            if (p1.getScore() > p2.getScore()) {
+                console.log("match winner :" + p1.getName())
+                matchWinner = p1;
+            } else {
+                console.log("match winner :" + p2.getName())
+                matchWinner = p2;
+            };
+        } else if (gamesPlayed == 3) {
+            console.log("Wow you both are gooood!");
+        };
+        if (matchWinner) {
+            // Show Match winner final score and finish
+            //Render new Match button
+        }
+
+    };
+    return { startMatch, switchCurrentPlayer, getCurrentPlayer, winnerMove, restartGame, getPlayers, isGameFinished, finishGame, matchLogic }
 })();

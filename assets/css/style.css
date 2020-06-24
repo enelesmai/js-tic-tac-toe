@@ -6,10 +6,10 @@
     align-items: center;
 }
 
-
 /*################# score board #################*/
 
 .score-board {
+    height: 10vw;
     display: inline-block;
     margin: 10px auto;
     width: auto;
@@ -20,6 +20,7 @@
     color: #fff;
     border: 6px solid #2c3e50;
     border-radius: 10px;
+    min-height: 60px;
 }
 
 .score-container {
@@ -44,6 +45,7 @@
 }
 
 #game-control {
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,12 +53,20 @@
     padding: 10px;
 }
 
-
 /* ############### Game board ################## */
 
+#navbar {
+    background-color: #34495e !important;
+    display: flex;
+    justify-content: center;
+}
+#navbar h1 {
+    color: white;
+}
+
 .game-board {
-    width: 600px;
-    height: 600px;
+    width: 70vw;
+    height: 70vw;
     margin: 0 auto;
     background-color: #34495e;
     color: #fff;
@@ -71,19 +81,39 @@
     border-radius: 2px;
     font-family: Helvetica;
     font-weight: bold;
-    font-size: 4em;
+    font-size: 8vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #formPlayers {
+    margin-top: 24px;
     padding-top: 24px;
     padding-bottom: 18px;
     background-color: #34495e;
     color: #fff;
     border: 6px solid #2c3e50;
     border-radius: 10px;
+}
+
+.score-board {
+    font-size: 2vw;
+    margin: 10px 0;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.score-number {
+    font-size: 4vw;
+}
+
+#currentPlayerMove b {
+    font-size: 3vw;
+}
+
+#currentPlayerMove {
+    font-size: 4.5vw;
 }
 
 .hide {

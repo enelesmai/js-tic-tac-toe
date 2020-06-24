@@ -61,39 +61,47 @@ const DisplayController = (() => {
     const addListeners = () => {
         const elements = document.getElementsByClassName('box');
         const myFunction = function myFunction() {
-            if (!GameLogic.isGameFinished()) {
-                const position = this.getAttribute('data-index');
-                if (Gameboard.isPositionEmpty(position)) {
-                    Gameboard.updateBoard(position, GameLogic.getCurrentPlayer().getSymbol());
-                    GameLogic.getCurrentPlayer().storeMove(position);
-                }
-                renderBoard(Gameboard.getBoardArray());
-                if (GameLogic.winnerMove()) {
-                    GameLogic.getCurrentPlayer().winner();
-                    renderScore(GameLogic.getPlayers());
-                    renderGameStatus(true);
-                    GameLogic.finishGame();
-                } else {
-                    if (Gameboard.isBoardFull()) {
-                        renderGameStatus(false);
-                        GameLogic.finishGame();
-                    } else {
-                        GameLogic.switchCurrentPlayer();
-                        renderNextMove();
-                    }
-                };
-            }
+            const position = this.getAttribute('data-index');
+            GameLogic.matchLogic(position);
         };
         for (let i = 0; i < elements.length; i += 1) {
             elements[i].addEventListener('click', myFunction, false);
         }
     };
 
+    const showWarningMessage = (errors) => {
+        document.getElementById("warningMessage").classList.add('show');
+        document.getElementById("warningMessage").classList.remove('hide');
+        document.getElementById('warningMessage').innerHTML = `Please: ${errors.join(', ')}`;
+    };
+
+    const prepareGameScreen = () => {
+        document.getElementById("game-container").classList.add('show');
+        document.getElementById("game-container").classList.remove('hide');
+        document.getElementById("formPlayers").classList.add('hide');
+        document.getElementById("formPlayers").classList.remove('show');
+    };
+
+    const showStartNewGame = () => {
+        document.getElementById("game-control").classList.add('show');
+        document.getElementById("game-control").classList.remove('hide');
+    };
+
+    const hideStartNewGame = () => {
+        document.getElementById("game-control").classList.add('hide');
+        document.getElementById("game-control").classList.remove('show');
+    };
+
     return {
+        prepareGameScreen,
+        showWarningMessage,
+        showStartNewGame,
+        hideStartNewGame,
         renderBoard,
         renderScore,
         renderNextMove,
         hideGameStatus,
         showGameStatus,
+        renderGameStatus,
     };
 })();
