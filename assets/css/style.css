@@ -4,7 +4,6 @@
     align-items: center;
 }
 
-
 /* ################# score board ################# */
 
 .score-board {
@@ -53,7 +52,6 @@
     padding: 10px;
 }
 
-
 /* ############### Game board ################## */
 
 #navbar {
@@ -97,9 +95,7 @@
     color: black;
 }
 
-
 /* ############### modal ################## */
-
 .modal-dialog {
     position: fixed !important;
     top: 50%;
