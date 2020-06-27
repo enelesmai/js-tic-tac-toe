@@ -1,105 +1,105 @@
 .board {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ################# score board ################# */
 
 .score-board {
-    height: 7vw;
-    display: inline-block;
-    width: auto;
-    text-align: center;
-    background-color: #34495e;
-    color: #fff;
-    border: 6px solid #2c3e50;
-    border-radius: 10px;
-    min-height: 62px;
-    font-size: 2vw;
-    margin: 10px 0;
-    overflow: hidden;
-    padding: 5px;
+  height: 7vw;
+  display: inline-block;
+  width: auto;
+  text-align: center;
+  background-color: #34495e;
+  color: #fff;
+  border: 6px solid #2c3e50;
+  border-radius: 10px;
+  min-height: 62px;
+  font-size: 2vw;
+  margin: 10px 0;
+  overflow: hidden;
+  padding: 5px;
 }
 
 .score-number {
-    font-size: 2vw;
+  font-size: 2vw;
 }
 
 .score-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .result {
-    font-size: 16px;
-    font-weight: bold;
-    margin: 23px;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 23px;
 }
 
 .current-player {
-    font-size: 2vw;
+  font-size: 2vw;
 }
 
 #game-control {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
 }
 
 /* ############### Game board ################## */
 
 #navbar {
-    background-color: #34495e !important;
-    display: flex;
-    justify-content: center;
+  background-color: #34495e !important;
+  display: flex;
+  justify-content: center;
 }
 
 #navbar h1 {
-    color: white;
+  color: white;
 }
 
 #formPlayers {
-    margin-top: 24px;
-    padding-top: 24px;
-    padding-bottom: 18px;
-    background-color: #34495e;
-    color: #fff;
-    border: 6px solid #2c3e50;
-    border-radius: 10px;
+  margin-top: 24px;
+  padding-top: 24px;
+  padding-bottom: 18px;
+  background-color: #34495e;
+  color: #fff;
+  border: 6px solid #2c3e50;
+  border-radius: 10px;
 }
 
 #currentPlayerMove b {
-    font-size: 3vw;
+  font-size: 3vw;
 }
 
 #currentPlayerMove {
-    font-size: 2vw;
+  font-size: 2vw;
 }
 
 .hide {
-    display: none !important;
+  display: none !important;
 }
 
 .show {
-    display: block !important;
+  display: block !important;
 }
 
 .next {
-    background-color: yellow;
-    color: black;
+  background-color: yellow;
+  color: black;
 }
 
 /* ############### modal ################## */
 .modal-dialog {
-    position: fixed !important;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    margin: 0 !important;
+  position: fixed !important;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  margin: 0 !important;
 }
