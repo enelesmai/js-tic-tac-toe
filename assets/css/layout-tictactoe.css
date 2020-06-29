@@ -1,0 +1,26 @@
+/* https://codepen.io/shammadahmed/pen/JOWEGW */
+
+.game-board {
+  width: 30vw;
+  height: 30vw;
+  margin: 0 auto;
+  background-color: #34495e;
+  color: #fff;
+  border: 6px solid #2c3e50;
+  border-radius: 10px;
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  min-height: 250px;
+}
+
+.box {
+  border: 6px solid #2c3e50;
+  border-radius: 2px;
+  font-family: Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 6vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+}
