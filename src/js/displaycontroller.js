@@ -6,6 +6,7 @@ import { GameLogic } from './gamelogic';
 export const DisplayController = (() => {
   const addListeners = () => {
     const elements = document.getElementsByClassName('box');
+
     const myFunction = function myFunction() {
       const position = this.getAttribute('data-index');
       GameLogic.matchLogic(position);

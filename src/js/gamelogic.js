@@ -8,8 +8,7 @@ import { Gameboard } from './gameboard'
 export const GameLogic = (() => {
   let p1;
   let p2;
-  let
-    currentPlayer;
+  let currentPlayer;
   let gameFinished = false;
   let gamesPlayed = 0;
   let matchWinner;
@@ -28,7 +27,7 @@ export const GameLogic = (() => {
     DisplayController.prepareMatchScreen();
   };
 
-  const winnerMove = () => {
+  const winnerMove = (pMoves) => {
     let winner = false;
     const winning = [
       ['0', '4', '8'],
@@ -40,7 +39,7 @@ export const GameLogic = (() => {
       ['1', '4', '7'],
       ['2', '5', '8'],
     ];
-    const pMoves = currentPlayer.getMoves();
+    //const pMoves = currentPlayer.getMoves();
 
     for (let i = 0; i < winning.length; i += 1) {
       if (winning[i].filter(n => !pMoves.includes(n)).length === 0) {
@@ -111,13 +110,15 @@ export const GameLogic = (() => {
   };
 
   const matchLogic = (index) => {
+
+    let cp_moves = currentPlayer.getMoves();
     if (!isGameFinished()) {
       if (Gameboard.isPositionEmpty(index)) {
         Gameboard.updateBoard(index, getCurrentPlayer().getSymbol());
         getCurrentPlayer().storeMove(index);
       }
       DisplayController.renderBoard(Gameboard.getBoardArray());
-      if (winnerMove()) {
+      if (winnerMove(cp_moves)) {
         getCurrentPlayer().winner();
         DisplayController.renderScore(getPlayers());
         DisplayController.renderGameStatus(true);

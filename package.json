@@ -5,7 +5,8 @@
     "private": true,
     "main": "index.html",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest",
+        "tw": "jest --watch *.js",
         "build": "webpack --mode production",
         "buildp": "webpack --mode production --watch",
         "watch": "webpack --mode development --watch"
