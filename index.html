@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/layout-tictactoe.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Tic Tac Toe</title>
+</head>
+
+<body>
+    <nav id="navbar" class="navbar navbar-dark">
+        <h1 class=" mb-0">TIC TAC TOE</h1>
+    </nav>
+    <div id="formPlayers" class="container show">
+        <p>Enter your names to play a match of three games.</p>
+        <form>
+            <div class="form-group">
+                <label for="inputPlayer1">Player 1 (X):</label>
+                <input type="text" class="form-control" id="inputPlayer1" placeholder="Player 1">
+            </div>
+            <div class="form-group">
+                <label for="inputPlayer2">Player 2 (O):</label>
+                <input type="text" class="form-control" id="inputPlayer2" placeholder="Player 2">
+            </div>
+            <div id="warningMessage" class="alert alert-danger" role="alert"></div>
+            <button type="button" id="startButton" class="btn btn-dark">Start!</button>
+        </form>
+    </div>
+    <div id="game-container" class="hide">
+        <section class="scores">
+            <div id="scoreDisplay" class="score-container">
+            </div>
+        </section>
+        <div id="game-control" class="hide">
+            <button type="button" id="restartButton" class="btn btn-dark">Start New Game</button>
+        </div>
+        <section class="board">
+            <div id="boardDisplay"></div>
+        </section>
+    </div>
+
+    <!-- modal display -->
+    <div id="matchEndModal" class="modal-dialog hide">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">MATCH IS OVER!</h5>
+            </div>
+            <div class="modal-body">
+                <p id="matchResults"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="startNewMatchButton" type="button" class="btn btn-dark">Start New Match</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="./assets/js/player.js"></script>
+    <script type="text/javascript" src="./assets/js/gameboard.js"></script>
+    <script type="text/javascript" src="./assets/js/displaycontroller.js"></script>
+    <script type="text/javascript" src="./assets/js/main.js"></script>
+    <script type="text/javascript" src="./assets/js/gamelogic.js"></script>
+</body>
+
+</html>
