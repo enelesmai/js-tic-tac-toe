@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const Player = (name, symbol) => {
+export const Player = (name, symbol) => {
   let score = 0;
   let moves = [];
   const getName = () => name;
@@ -19,3 +19,5 @@ const Player = (name, symbol) => {
     cleanMoves,
   };
 };
+
+export default Player;

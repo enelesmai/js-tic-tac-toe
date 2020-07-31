@@ -1,6 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-const GameLogic = (() => {
+
+import { Player } from './player'
+import { DisplayController } from './displaycontroller'
+import { Gameboard } from './gameboard'
+
+export const GameLogic = (() => {
   let p1;
   let p2;
   let
@@ -160,3 +165,5 @@ const GameLogic = (() => {
     startNewMatch,
   };
 })();
+
+export default GameLogic;

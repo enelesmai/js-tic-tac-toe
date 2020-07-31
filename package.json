@@ -2,9 +2,13 @@
     "name": "js-tic-tac-toe",
     "version": "1.0.0",
     "description": "A Tic Tac Toe game you can play in your browser!",
+    "private": true,
     "main": "index.html",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack --mode production",
+        "buildp": "webpack --mode production --watch",
+        "watch": "webpack --mode development --watch"
     },
     "repository": {
         "type": "git",
@@ -17,11 +21,41 @@
     },
     "homepage": "https://github.com/enelesmai/js-tic-tac-toe#readme",
     "devDependencies": {
+        "@babel/core": "^7.11.0",
+        "@babel/preset-env": "^7.11.0",
+        "babel-loader": "^8.1.0",
+        "css-loader": "^4.2.0",
         "eslint": "^6.8.0",
         "eslint-config-airbnb-base": "^14.1.0",
         "eslint-plugin-import": "^2.20.2",
+        "file-loader": "^6.0.0",
+        "jest": "^26.2.2",
+        "style-loader": "^1.2.1",
         "stylelint": "^13.3.3",
         "stylelint-config-standard": "^20.0.0",
         "stylelint-scss": "^3.17.2"
+    },
+    "dependencies": {
+        "bootstrap": "^4.5.0",
+        "jquery": "^3.5.1",
+        "popper.js": "^1.16.1",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "js",
+            "jsx"
+        ],
+        "moduleDirectories": [
+            "node_modules",
+            "bower_components",
+            "shared"
+        ],
+        "moduleNameMapper": {
+            "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+            "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+            "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js"
+        }
     }
 }

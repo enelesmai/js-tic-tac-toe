@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const Gameboard = (() => {
+export const Gameboard = (() => {
   let boardAarray = ['', '', '', '', '', '', '', '', ''];
   const updateBoard = (position, symbol) => {
     boardAarray[position] = symbol;
@@ -20,3 +20,4 @@ const Gameboard = (() => {
     isBoardFull,
   };
 })();
+export default Gameboard;

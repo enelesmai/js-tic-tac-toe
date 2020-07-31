@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-const DisplayController = (() => {
+
+import { GameLogic } from './gamelogic';
+
+export const DisplayController = (() => {
   const addListeners = () => {
     const elements = document.getElementsByClassName('box');
     const myFunction = function myFunction() {
@@ -131,3 +134,5 @@ const DisplayController = (() => {
     prepareMatchScreen,
   };
 })();
+
+export default DisplayController;
