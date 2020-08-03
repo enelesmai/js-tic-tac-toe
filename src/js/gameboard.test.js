@@ -1,45 +1,45 @@
 import { Gameboard } from './gameboard';
 
-const expected_empty = ['', '', '', '', '', '', '', '', ''];
-const expected_full = ['X', 'O', 'O', 'X', 'X', 'O', 'O', 'X', 'O'];
+const expectedEmpty = ['', '', '', '', '', '', '', '', ''];
+const expectedFull = ['X', 'O', 'O', 'X', 'X', 'O', 'O', 'X', 'O'];
 
 test('it tests if position is empty', () => {
-    expect(Gameboard.isPositionEmpty(0)).toBe(true);
+  expect(Gameboard.isPositionEmpty(0)).toBe(true);
 });
 
 test('it updates the board', () => {
-    Gameboard.updateBoard(2, 'X');
-    expect(Gameboard.isPositionEmpty(2)).toBe(false);
+  Gameboard.updateBoard(2, 'X');
+  expect(Gameboard.isPositionEmpty(2)).toBe(false);
 });
 
 test('it returns the board array', () => {
-    expect(Gameboard.getBoardArray()).toEqual(
-        expect.arrayContaining(expected_empty)
-    );
+  expect(Gameboard.getBoardArray()).toEqual(
+    expect.arrayContaining(expectedEmpty),
+  );
 });
 
 test('it populates gameboard array with a game', () => {
-    for (let i = 0; i < expected_full.length; i += 1) {
-        Gameboard.updateBoard(i, expected_full[i]);
-    }
-    expect(Gameboard.getBoardArray()).toEqual(
-        expect.arrayContaining(expected_full)
-    );
+  for (let i = 0; i < expectedFull.length; i += 1) {
+    Gameboard.updateBoard(i, expectedFull[i]);
+  }
+  expect(Gameboard.getBoardArray()).toEqual(
+    expect.arrayContaining(expectedFull),
+  );
 });
 
 test('it cleans populated gameboard array', () => {
-    for (let i = 0; i < expected_full.length; i += 1) {
-        Gameboard.updateBoard(i, expected_full[i]);
-    }
-    Gameboard.cleanBoard();
-    expect(Gameboard.getBoardArray()).toEqual(
-        expect.arrayContaining(expected_empty)
-    );
+  for (let i = 0; i < expectedFull.length; i += 1) {
+    Gameboard.updateBoard(i, expectedFull[i]);
+  }
+  Gameboard.cleanBoard();
+  expect(Gameboard.getBoardArray()).toEqual(
+    expect.arrayContaining(expectedEmpty),
+  );
 });
 
 test('it checks if board full', () => {
-    for (let i = 0; i < expected_full.length; i += 1) {
-        Gameboard.updateBoard(i, expected_full[i]);
-    }
-    expect(Gameboard.isBoardFull()).toEqual(true);
+  for (let i = 0; i < expectedFull.length; i += 1) {
+    Gameboard.updateBoard(i, expectedFull[i]);
+  }
+  expect(Gameboard.isBoardFull()).toEqual(true);
 });

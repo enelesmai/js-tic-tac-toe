@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
-import { DisplayController } from './displaycontroller'
-import { Gameboard } from './gameboard'
+import { DisplayController } from './displaycontroller';
+import { Gameboard } from './gameboard';
 
 export const GameLogic = (() => {
   let p1;
@@ -38,7 +38,7 @@ export const GameLogic = (() => {
       ['1', '4', '7'],
       ['2', '5', '8'],
     ];
-    //const pMoves = currentPlayer.getMoves();
+    // const pMoves = currentPlayer.getMoves();
 
     for (let i = 0; i < winning.length; i += 1) {
       if (winning[i].filter(n => !pMoves.includes(n)).length === 0) {
@@ -73,9 +73,21 @@ export const GameLogic = (() => {
     if (errors.length === 0) {
       setCurrentPlayers(currentP1, currentP2);
       currentPlayer = getRandomPlayer(currentP1, currentP2);
-      return true;
-    } else {
-      return false;
+      return [true, errors];
+    }
+    return [false, errors];
+  };
+
+  const addListeners = () => {
+    const elements = document.getElementsByClassName('box');
+
+    const myFunction = function myFunction() {
+      const position = this.getAttribute('data-index');
+      // eslint-disable-next-line no-use-before-define
+      matchLogic(position);
+    };
+    for (let i = 0; i < elements.length; i += 1) {
+      elements[i].addEventListener('click', myFunction, false);
     }
   };
 
@@ -83,14 +95,17 @@ export const GameLogic = (() => {
     p1.cleanMoves();
     p2.cleanMoves();
     Gameboard.cleanBoard();
-    DisplayController.renderBoard(Gameboard.getBoardArray());
+    if (DisplayController.renderBoard(Gameboard.getBoardArray())) {
+      addListeners();
+    }
     DisplayController.hideGameStatus();
-    DisplayController.renderNextMove();
+    // eslint-disable-next-line no-use-before-define
+    DisplayController.renderNextMove(getCurrentPlayer().getName());
     DisplayController.hideStartNewGame();
     gameFinished = false;
   };
 
-  const setCurrentPlayer = (p) => { currentPlayer = p };
+  const setCurrentPlayer = (p) => { currentPlayer = p; };
 
   const getCurrentPlayer = () => currentPlayer;
 
@@ -111,26 +126,40 @@ export const GameLogic = (() => {
     return currentPlayer;
   };
 
-  const matchLogic = (index) => {
+  const renderMatchEnd = (string) => {
+    DisplayController.hideStartNewGame();
+    const winnerStr = document.getElementById('matchResults');
+    winnerStr.innerHTML = string;
+    document.getElementById('matchEndModal').classList.add('show');
+    document.getElementById('matchEndModal').classList.remove('hide');
+    document.getElementById('startNewMatchButton').addEventListener('click', () => {
+      startNewMatch();
+    });
+  };
 
-    let cp_moves = currentPlayer.getMoves();
+  const matchLogic = (index) => {
+    const cpMoves = currentPlayer.getMoves();
     if (!isGameFinished()) {
       if (Gameboard.isPositionEmpty(index)) {
         Gameboard.updateBoard(index, getCurrentPlayer().getSymbol());
         getCurrentPlayer().storeMove(index);
       }
-      DisplayController.renderBoard(Gameboard.getBoardArray());
-      if (winnerMove(cp_moves)) {
+      if (DisplayController.renderBoard(Gameboard.getBoardArray())) {
+        addListeners();
+      }
+
+
+      if (winnerMove(cpMoves)) {
         getCurrentPlayer().winner();
         DisplayController.renderScore(getPlayers());
-        DisplayController.renderGameStatus(true);
+        DisplayController.renderGameStatus(getCurrentPlayer().getName(), true);
         finishGame();
       } else if (Gameboard.isBoardFull()) {
-        DisplayController.renderGameStatus(false);
+        DisplayController.renderGameStatus(getCurrentPlayer().getName(), false);
         finishGame();
       } else {
         switchCurrentPlayer();
-        DisplayController.renderNextMove();
+        DisplayController.renderNextMove(getCurrentPlayer().getName());
       }
     }
 
@@ -150,9 +179,9 @@ export const GameLogic = (() => {
       } else {
         winnerStr += `${p2.getScore()}-${p1.getScore()}`;
       }
-      DisplayController.renderMatchEnd(winnerStr);
+      renderMatchEnd(winnerStr);
     } else if (matchDraw !== '') {
-      DisplayController.renderMatchEnd(matchDraw);
+      renderMatchEnd(matchDraw);
     }
   };
   return {
@@ -168,6 +197,7 @@ export const GameLogic = (() => {
     matchLogic,
     startNewMatch,
     setCurrentPlayers,
+    addListeners,
   };
 })();
 

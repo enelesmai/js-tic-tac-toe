@@ -12,6 +12,8 @@ A Tic Tac Toe game you can play in your browser!
 ## Built With
 
 - HTML5 / CSS3 / JavaScript
+- ESlint, Stylelint
+- Jest
 - VS Code
 - UI Design Tic-Tac-Toe game layout by [Hammad Ahmed](https://codepen.io/shammadahmed)
 
@@ -21,9 +23,15 @@ A Tic Tac Toe game you can play in your browser!
 
 
 ## Setup
+- Clone the repository.
+- Run ```npm install```
+- run ```yarn build```
 
-- Clone the repository and open Index Page
+## Testing
 
+- ```npm run test```
+
+![image](https://user-images.githubusercontent.com/25496166/89230427-a741e100-d5b9-11ea-88bf-8ed471a63b2d.png)
 
 
 ## Authors

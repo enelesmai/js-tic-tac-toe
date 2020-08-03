@@ -1,33 +1,22 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
-import { GameLogic } from './gamelogic';
 
 export const DisplayController = (() => {
-  const addListeners = () => {
-    const elements = document.getElementsByClassName('box');
-
-    const myFunction = function myFunction() {
-      const position = this.getAttribute('data-index');
-      GameLogic.matchLogic(position);
-    };
-    for (let i = 0; i < elements.length; i += 1) {
-      elements[i].addEventListener('click', myFunction, false);
-    }
-  };
   const renderBoard = (array) => {
     let htmlTag = '<div class="game-board">';
+
     for (let i = 0; i < array.length; i += 1) {
       htmlTag += `<div class="box" data-index="${i}">${array[i]}</div>`;
     }
     htmlTag += '</div>';
     const boardPlaceholder = document.getElementById('boardDisplay');
     boardPlaceholder.innerHTML = htmlTag;
-    addListeners();
+    return true;
   };
 
-  const renderNextMove = () => {
-    const htmlTag = `<b>${GameLogic.getCurrentPlayer().getName()}, make your move! </b>`;
+  const renderNextMove = (name) => {
+    const htmlTag = `<b>${name}, make your move! </b>`;
     document.getElementById('currentPlayerMove').innerHTML = htmlTag;
   };
 
@@ -45,14 +34,14 @@ export const DisplayController = (() => {
     document.getElementById('currentPlayerMove').classList.add('hide');
   };
 
-  const renderGameStatus = (winner, fakeHtmlTag = false) => {
+  const renderGameStatus = (name, winner, fakeHtmlTag = false) => {
     let htmlTag = '';
     if (winner) {
-      htmlTag = `<b>${GameLogic.getCurrentPlayer().getName()} is the winner! </b>`;
+      htmlTag = `<b>${name} is the winner! </b>`;
     } else {
       htmlTag = '<b>This is a draw!</b>';
     }
-    if (fakeHtmlTag == false) {
+    if (fakeHtmlTag === false) {
       document.getElementById('gameStatus').innerHTML = htmlTag;
       showGameStatus();
     }
@@ -115,17 +104,6 @@ export const DisplayController = (() => {
     document.getElementById('game-control').classList.remove('show');
   };
 
-  const renderMatchEnd = (string) => {
-    hideStartNewGame();
-    const winnerStr = document.getElementById('matchResults');
-    winnerStr.innerHTML = string;
-    document.getElementById('matchEndModal').classList.add('show');
-    document.getElementById('matchEndModal').classList.remove('hide');
-    document.getElementById('startNewMatchButton').addEventListener('click', () => {
-      GameLogic.startNewMatch();
-    });
-  };
-
   const updateGame = (board, players) => {
     DisplayController.renderBoard(board);
     DisplayController.renderScore(players);
@@ -142,7 +120,6 @@ export const DisplayController = (() => {
     hideGameStatus,
     showGameStatus,
     renderGameStatus,
-    renderMatchEnd,
     prepareMatchScreen,
     updateGame,
   };
