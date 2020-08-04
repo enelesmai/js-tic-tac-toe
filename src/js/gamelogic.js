@@ -1,10 +1,13 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-const GameLogic = (() => {
+
+import { DisplayController } from './displaycontroller';
+import { Gameboard } from './gameboard';
+
+export const GameLogic = (() => {
   let p1;
   let p2;
-  let
-    currentPlayer;
+  let currentPlayer;
   let gameFinished = false;
   let gamesPlayed = 0;
   let matchWinner;
@@ -23,7 +26,7 @@ const GameLogic = (() => {
     DisplayController.prepareMatchScreen();
   };
 
-  const winnerMove = () => {
+  const winnerMove = (pMoves) => {
     let winner = false;
     const winning = [
       ['0', '4', '8'],
@@ -35,7 +38,7 @@ const GameLogic = (() => {
       ['1', '4', '7'],
       ['2', '5', '8'],
     ];
-    const pMoves = currentPlayer.getMoves();
+    // const pMoves = currentPlayer.getMoves();
 
     for (let i = 0; i < winning.length; i += 1) {
       if (winning[i].filter(n => !pMoves.includes(n)).length === 0) {
@@ -44,6 +47,7 @@ const GameLogic = (() => {
     }
     return winner;
   };
+
   const isValid = (p1, p2) => {
     const error = [];
     if (p1.getName() === '' || p2.getName() === '') {
@@ -59,22 +63,31 @@ const GameLogic = (() => {
 
   const getRandomPlayer = () => getPlayers()[Math.floor(Math.random() * 2)];
 
-  const updateGame = () => {
-    DisplayController.renderBoard(Gameboard.getBoardArray());
-    DisplayController.renderScore(getPlayers());
+  const setCurrentPlayers = (currentP1, currentP2) => {
+    p1 = currentP1;
+    p2 = currentP2;
   };
 
-  const startMatch = () => {
-    p1 = Player(document.getElementById('inputPlayer1').value, 'X');
-    p2 = Player(document.getElementById('inputPlayer2').value, 'O');
-    const errors = isValid(p1, p2);
+  const startMatch = (currentP1, currentP2) => {
+    const errors = isValid(currentP1, currentP2);
     if (errors.length === 0) {
-      currentPlayer = getRandomPlayer(p1, p2);
-      DisplayController.prepareGameScreen();
-      updateGame();
-      DisplayController.renderNextMove();
-    } else {
-      DisplayController.showWarningMessage(errors);
+      setCurrentPlayers(currentP1, currentP2);
+      currentPlayer = getRandomPlayer(currentP1, currentP2);
+      return [true, errors];
+    }
+    return [false, errors];
+  };
+
+  const addListeners = () => {
+    const elements = document.getElementsByClassName('box');
+
+    const myFunction = function myFunction() {
+      const position = this.getAttribute('data-index');
+      // eslint-disable-next-line no-use-before-define
+      matchLogic(position);
+    };
+    for (let i = 0; i < elements.length; i += 1) {
+      elements[i].addEventListener('click', myFunction, false);
     }
   };
 
@@ -82,20 +95,28 @@ const GameLogic = (() => {
     p1.cleanMoves();
     p2.cleanMoves();
     Gameboard.cleanBoard();
-    DisplayController.renderBoard(Gameboard.getBoardArray());
+    if (DisplayController.renderBoard(Gameboard.getBoardArray())) {
+      addListeners();
+    }
     DisplayController.hideGameStatus();
-    DisplayController.renderNextMove();
+    // eslint-disable-next-line no-use-before-define
+    DisplayController.renderNextMove(getCurrentPlayer().getName());
     DisplayController.hideStartNewGame();
     gameFinished = false;
   };
+
+  const setCurrentPlayer = (p) => { currentPlayer = p; };
+
   const getCurrentPlayer = () => currentPlayer;
 
   const isGameFinished = () => gameFinished;
+
   const finishGame = () => {
     gamesPlayed += 1;
     gameFinished = true;
     DisplayController.showStartNewGame();
   };
+
   const switchCurrentPlayer = () => {
     if (currentPlayer.getName() === p1.getName()) {
       currentPlayer = p2;
@@ -105,24 +126,40 @@ const GameLogic = (() => {
     return currentPlayer;
   };
 
+  const renderMatchEnd = (string) => {
+    DisplayController.hideStartNewGame();
+    const winnerStr = document.getElementById('matchResults');
+    winnerStr.innerHTML = string;
+    document.getElementById('matchEndModal').classList.add('show');
+    document.getElementById('matchEndModal').classList.remove('hide');
+    document.getElementById('startNewMatchButton').addEventListener('click', () => {
+      startNewMatch();
+    });
+  };
+
   const matchLogic = (index) => {
+    const cpMoves = currentPlayer.getMoves();
     if (!isGameFinished()) {
       if (Gameboard.isPositionEmpty(index)) {
         Gameboard.updateBoard(index, getCurrentPlayer().getSymbol());
         getCurrentPlayer().storeMove(index);
       }
-      DisplayController.renderBoard(Gameboard.getBoardArray());
-      if (winnerMove()) {
+      if (DisplayController.renderBoard(Gameboard.getBoardArray())) {
+        addListeners();
+      }
+
+
+      if (winnerMove(cpMoves)) {
         getCurrentPlayer().winner();
         DisplayController.renderScore(getPlayers());
-        DisplayController.renderGameStatus(true);
+        DisplayController.renderGameStatus(getCurrentPlayer().getName(), true);
         finishGame();
       } else if (Gameboard.isBoardFull()) {
-        DisplayController.renderGameStatus(false);
+        DisplayController.renderGameStatus(getCurrentPlayer().getName(), false);
         finishGame();
       } else {
         switchCurrentPlayer();
-        DisplayController.renderNextMove();
+        DisplayController.renderNextMove(getCurrentPlayer().getName());
       }
     }
 
@@ -142,21 +179,26 @@ const GameLogic = (() => {
       } else {
         winnerStr += `${p2.getScore()}-${p1.getScore()}`;
       }
-      DisplayController.renderMatchEnd(winnerStr);
+      renderMatchEnd(winnerStr);
     } else if (matchDraw !== '') {
-      DisplayController.renderMatchEnd(matchDraw);
+      renderMatchEnd(matchDraw);
     }
   };
   return {
     startMatch,
-    switchCurrentPlayer,
-    getCurrentPlayer,
     winnerMove,
+    switchCurrentPlayer,
+    setCurrentPlayer,
+    getCurrentPlayer,
     restartGame,
     getPlayers,
     isGameFinished,
     finishGame,
     matchLogic,
     startNewMatch,
+    setCurrentPlayers,
+    addListeners,
   };
 })();
+
+export default GameLogic;
