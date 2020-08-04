@@ -19,7 +19,7 @@ A Tic Tac Toe game you can play in your browser!
 
 ## Live Demo
 
-[Live Demo Link](https://raw.githack.com/enelesmai/js-tic-tac-toe/feature-tic-tac-toe/index.html)
+[Live Demo Link](https://raw.githack.com/enelesmai/js-tic-tac-toe/development/dist/index.html)
 
 
 ## Setup
